@@ -1,32 +1,88 @@
 <script setup>
 import { useUserStore } from "../stores/user";
-import { useTaskStore} from "../stores/task"
+import { useTaskStore} from "../stores/task";
 import { ref } from "vue";
+
+
+
 
 const userStore = useUserStore();
 const taskStore = useTaskStore();
 
 const email = ref("");
 const password = ref("");
+const login = ref("");
+const seeUser = ref("");
+const logout = ref("")
 </script>
 
 <template>
-  <h1>Home</h1>
-  <h2 v-if="userStore.user">Current User: {{ userStore.user.user.email }}</h2>
+  <div class="form">   
+    <h1>ToDo List</h1>
+	  <div class="inputContainer">
+		  <label for="email"> Email: </label>
+		  <input type="email" id="email" v-model="email">
+	  </div>
 
-  <input placeholder="Write your email" v-model="email" />
-  <input type="password" placeholder="Write your password" v-model="password" />
-  <button @click="userStore.createNewUser(email, password)">
-    Create new User
-  </button>
+	  <div class="inputContainer">
+		  <label for="email"> Password: </label>
+		  <input type="password" id="password" v-model="password">
+    </div>
 
-  <br><br>
-  <button @click="taskStore.fetchTasks()">fetch tasks</button>
-  <ul>
-    <li v-for="task in taskStore.tasks">
-      {{ task.title }}
-    </li>
-  </ul>
+
+	  <div class="buttonContainer">
+		  <button @click="userStore.createNewUser(email, password)"> Create </button>
+		  <button @click="userStore.login"> Login </button>
+		  <button @click="userStore.seeUser"> See user </button>
+		  <button @click="userStore.logout"> Logout </button>
+      <!--revisar los botones-->
+    </div>
+    
+    <br><br>
+   <button @click="taskStore.fetchTasks()">fetch tasks</button>
+   <button @click="taskStore.insertData()">insert tasks</button>
+
+    <ul>
+     <li v-for="task in taskStore.tasks">
+       {{ task.title }}
+     </li>
+    </ul>
+    <button @click="taskStore.deleteData()">Delete tasks</button>
+  </div>
+
 </template>
 
-<style></style>
+<style scoped>
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: beige;
+}
+.inputContainer {
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+  width: 300px;
+}
+
+input {
+	font-size: 1.5em;
+  align-items: center;
+  width: 300px;
+}
+.buttonContainer {
+	display: flex;
+	flex-direction: wrap;
+  align-items: center;
+  width: 300px;
+  gap: 5px;
+
+}
+
+button {
+	margin-bottom: 1em;
+	padding: 1em 2em 1em 2em;
+}
+
+</style>
