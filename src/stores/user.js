@@ -29,6 +29,7 @@ export const useUserStore = defineStore("userStore", () => {
     else
     {
       console.log(data);
+      user.value = data;
     }
   }
   //Que tal esta el logut??
