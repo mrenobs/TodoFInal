@@ -36,11 +36,11 @@ export const useTaskStore = defineStore("taskStore", () => {
     fetchTasks()
   }
 
-  const updateTaskTitle = async (id, newTitle) => {
+  const updateTaskTitle = async (task) => {
     const { error } = await supabase
       .from('tasks')
-      .update({ title: newTitle })
-      .eq('id', id);
+      .update({ title: task.title })
+      .eq('id', task.id);
 
     if (error) {
       console.log("Error updating task title: ", error);

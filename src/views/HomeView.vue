@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 
 
+
 const userStore = useUserStore();
 const taskStore = useTaskStore();
 
@@ -24,7 +25,16 @@ const deleteTask = (id) => {
   taskStore.deleteData(id);
 }
 const upDate = (task) => {
-taskStore.updateTaskTitle(task);
+  let newTitle = prompt("Edit task", task.title);
+  if(newTitle !== null && newTitle !== ""){
+    task.title = newTitle;
+    taskStore.updateTaskTitle(task);
+  }
+}
+
+const logoutButton = () => {
+  userStore.logout();
+  taskStore.tasks = null;
 }
 
 
@@ -42,7 +52,7 @@ taskStore.updateTaskTitle(task);
 	    <div class="inputContainer" >
 		    <label for="email"> Email: </label>
 		    <input type="email" id="email" v-model="email">
-	   </div>
+	   </div>     
 
 	    <div class="inputContainer" >
 		    <label for="email"> Password: </label>
@@ -54,44 +64,47 @@ taskStore.updateTaskTitle(task);
       
 		    <button @click="userStore.createNewUser(email, password)" style="background-color: blue;"> <img src="../assets/images/my5qihx4.png" width="20px">Crear Usuario </button>
 		    <button @click="userStore.login" > <img src="../assets/images/272456.png" alt="" width="20px"> Usuario </button>
-		    <button @click="userStore.seeUser" style="background-color: blue;" >   <img src="../assets/images/6lmuzesy.png" alt="" width="20px"> Perfil</button>
-		    <button @click="userStore.logout" >  <img src="../assets/images/4103045.png" alt="" width="25px"> LogOut </button>
+		    <button @click="logoutButton" >  <img src="../assets/images/4103045.png" alt="" width="25px"> LogOut </button>
       
       </div>
     
-      
-      <div>
-        <button @click="taskStore.fetchTasks()" > Tareas <img src="../assets/images/4ry4t5va.png" width="20px"></button>
-      </div>
-
-
-      
-      <div>
-        
-        <ul >
-          <h3>Estas son tus tareas pendientes</h3>
-          <li v-for="task in taskStore.tasks"  class="ul"> 
-           {{ task.title }} 
-           <button @click="deleteTask(task.id)" >
-            <img src="../assets/images/92dgomml.png" alt="10px" width="15px" >
-           </button>
-           <button @click="updateTaskTitle(task.title)">
-            <img src="../assets/images/3mbzznxi.png" alt="" width="15px" >
-           </button>
-           
-          </li>
-        </ul>
-      </div>
-
-      <div class="inputContainer">
-        <div class="input1">
-          <label for=""></label>
-          <input type="text" v-model="taskTitle">
-        <button @click="createTask('Prueba')" >insert tasks <img src="../assets/images/bk8mykix.png" width="25px"></button>
+      <div v-if="userStore.user">
+        <div>
+          <h2>Usuario logueado: {{ userStore.user.user.email }}</h2>
         </div>
-        
-      </div>
+      
+        <div>
+          <button @click="taskStore.fetchTasks()" > Tareas <img src="../assets/images/4ry4t5va.png" width="20px"></button>
+        </div>
 
+
+        
+        <div>
+          
+          <ul >
+            <h3>Estas son tus tareas pendientes</h3>
+            <li v-for="task in taskStore.tasks"  class="ul"> 
+            {{ task.title }} 
+            <button @click="deleteTask(task.id)" >
+              <img src="../assets/images/92dgomml.png" alt="10px" width="15px" >
+            </button>
+            <button @click="upDate(task)">
+              <img src="../assets/images/3mbzznxi.png" alt="" width="15px" >
+            </button>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="inputContainer">
+          <div class="input1">
+            <label for=""></label>
+            <input type="text" v-model="taskTitle">
+          <button @click="createTask('Prueba')" >insert tasks <img src="../assets/images/bk8mykix.png" width="25px"></button>
+          </div>
+          
+        </div>
+      </div>
     </div>
 
     
@@ -198,5 +211,5 @@ button {
   
 }
 
-
+@import '~@fortawesome/free-brands-svg-icons'
 </style>

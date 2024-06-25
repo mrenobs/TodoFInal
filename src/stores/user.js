@@ -40,6 +40,7 @@ export const useUserStore = defineStore("userStore", () => {
       console.log(error);
     }
     else {
+      user.value = null;
       console.log("Sign out success")
     }
   }
