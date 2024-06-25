@@ -36,6 +36,23 @@ export const useTaskStore = defineStore("taskStore", () => {
     fetchTasks()
   }
 
-  return { tasks, fetchTasks, insertData, deleteData}
+  const updateTaskTitle = async (id, newTitle) => {
+    const { error } = await supabase
+      .from('tasks')
+      .update({ title: newTitle })
+      .eq('id', id);
+
+    if (error) {
+      console.log("Error updating task title: ", error);
+    } else {
+      console.log("Task title updated successfully");
+    }
+
+    fetchTasks();
+  };
+
+
+  return { tasks, fetchTasks, insertData, deleteData, updateTaskTitle}
   //mirar si las funciones de las tareas estan bien 
 })
+

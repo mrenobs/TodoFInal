@@ -23,6 +23,11 @@ const createTask = (title) =>{
 const deleteTask = (id) => {
   taskStore.deleteData(id);
 }
+const upDate = (task) => {
+taskStore.updateTaskTitle(task);
+}
+
+
 
 </script>
 
@@ -47,29 +52,33 @@ const deleteTask = (id) => {
 
 	    <div class="buttonContainer">
       
-		    <button @click="userStore.createNewUser(email, password)" > Create </button>
-		    <button @click="userStore.login" > Login </button>
-		    <button @click="userStore.seeUser" > See user </button>
-		    <button @click="userStore.logout" > Logout </button>
+		    <button @click="userStore.createNewUser(email, password)" style="background-color: blue;"> <img src="../assets/images/my5qihx4.png" width="20px">Crear Usuario </button>
+		    <button @click="userStore.login" > <img src="../assets/images/272456.png" alt="" width="20px"> Usuario </button>
+		    <button @click="userStore.seeUser" style="background-color: blue;" >   <img src="../assets/images/6lmuzesy.png" alt="" width="20px"> Perfil</button>
+		    <button @click="userStore.logout" >  <img src="../assets/images/4103045.png" alt="" width="25px"> LogOut </button>
       
       </div>
     
-      <br><br>
+      
       <div>
-        <button @click="taskStore.fetchTasks()" >fetch tasks</button>
+        <button @click="taskStore.fetchTasks()" > Tareas <img src="../assets/images/4ry4t5va.png" width="20px"></button>
       </div>
 
-      <!--boton editar tareas y su funcion-->
 
       
       <div>
+        
         <ul >
-          <li v-for="task in taskStore.tasks"  class="ul">
+          <h3>Estas son tus tareas pendientes</h3>
+          <li v-for="task in taskStore.tasks"  class="ul"> 
            {{ task.title }} 
            <button @click="deleteTask(task.id)" >
-            <img src="../assets/images/checked1.jpg" alt="10px" width="15px" >
+            <img src="../assets/images/92dgomml.png" alt="10px" width="15px" >
            </button>
-           <button>editar</button>
+           <button @click="updateTaskTitle(task.title)">
+            <img src="../assets/images/3mbzznxi.png" alt="" width="15px" >
+           </button>
+           
           </li>
         </ul>
       </div>
@@ -78,7 +87,7 @@ const deleteTask = (id) => {
         <div class="input1">
           <label for=""></label>
           <input type="text" v-model="taskTitle">
-        <button @click="createTask('Prueba')">insert tasks</button>
+        <button @click="createTask('Prueba')" >insert tasks <img src="../assets/images/bk8mykix.png" width="25px"></button>
         </div>
         
       </div>
@@ -182,7 +191,7 @@ button {
 	padding: 1em 2em 1em 2em;
   border-radius: 50px;
   color: #fff;
-  font-size: 16px;
+  font-size: 13px;
   background: #ff5945;
   cursor: pointer;  
 

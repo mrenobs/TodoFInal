@@ -15,7 +15,7 @@ export const useUserStore = defineStore("userStore", () => {
     else user.value = data;
     console.log("user :", user.value);
   };
-  //Mirar de corregior el login
+  
   async function login() {
     console.log("run")
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -32,7 +32,7 @@ export const useUserStore = defineStore("userStore", () => {
       user.value = data;
     }
   }
-  //Que tal esta el logut??
+  
   async function logout() {
     const { error } = await supabase.auth.signOut();
   
@@ -43,14 +43,20 @@ export const useUserStore = defineStore("userStore", () => {
       console.log("Sign out success")
     }
   }
-  //ver mi usuario?
+  
   async function seeUser() {
     const localUser = await supabase.auth.getSession();
     console.log(localUser.data.session)
   }
+  const upDate = async () => {
+    const { error } = await supabase
+    .from('tasks')
+    .update({  title: task.title })
+    .eq('id')
+  }
   
 
-  return { user, createNewUser, login, logout, seeUser }
+  return { user, createNewUser, login, logout, seeUser, upDate }
 });
 
 
