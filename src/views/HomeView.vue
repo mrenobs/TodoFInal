@@ -2,7 +2,6 @@
 import { useUserStore } from "../stores/user";
 import { useTaskStore} from "../stores/task";
 import { ref } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 
 
